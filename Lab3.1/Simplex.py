@@ -2,6 +2,7 @@ import math
 import numpy as np
 from fractions import Fraction
 import copy
+import os
 
 def getPivotEl(arr, basis):
     for i in range(len(arr)):
@@ -41,12 +42,8 @@ def toTableau(c, A, b, basis):
 def improveable(tableau, maximizing: bool):
     z = tableau[-1]
     if maximizing:
-        if all(x >= 0 for x in z[:-1]) and any(x == 0 for x in z[:-1]):
-            print("The's an infinite number of solutions.")
         return any(x < 0 for x in z[:-1])
     else:
-        if all(x <= 0 for x in z[:-1]) and any(x == 0 for x in z[:-1]):
-            print("The's an infinite number of solutions.")
         return any(x > 0 for x in z[:-1])
 
 def getPivotPos(tableau, maximizing: bool):
@@ -102,7 +99,9 @@ def strListToFloatList(str_list):
         n += 1
     return(str_list)
 
-f = open("D:\\School\Algebra\Apllied Math\Labs\Lab3.1\Test7.txt", "r")
+folder = os.path.dirname(os.path.abspath(__file__))
+filePath = os.path.join(folder, 'Test7.txt')
+f = open(filePath, "r")
 maximizing = bool(int(f.readline()))
 numbers = strListToFloatList(f.readline().split())
 c = strListToFloatList(f.readline().split())
